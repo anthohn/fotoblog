@@ -21,6 +21,9 @@ import authentication.views
 import blog.views
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', LoginView.as_view(
@@ -38,4 +41,10 @@ urlpatterns = [
          ),
     path('home/', blog.views.home, name='home'),
     path('signup/', authentication.views.signup_page, name='signup'),
+    path('photo/upload/', blog.views.photo_upload, name='photo_upload'),
 ]
+# Condition pour vérifier si le mode DEBUG est activé dans les paramètres du projet
+if settings.DEBUG:
+    # Si le mode DEBUG est activé, on ajoute une URL pour servir les fichiers media
+    urlpatterns += static(
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
