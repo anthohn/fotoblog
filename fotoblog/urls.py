@@ -42,6 +42,7 @@ urlpatterns = [
     path('home/', blog.views.home, name='home'),
     path('signup/', authentication.views.signup_page, name='signup'),
     path('photo/upload/', blog.views.photo_upload, name='photo_upload'),
+    path('profil/photo/upload/', authentication.views.upload_profile_photo, name='upload_profile_photo'),
 ]
 # Condition pour vérifier si le mode DEBUG est activé dans les paramètres du projet
 if settings.DEBUG:
