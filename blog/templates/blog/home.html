@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h2>Photos</h2>
+    <h2>Blog</h2>
     <div class="grid-container">
-        {% for photo in photos %}
+        {% for blog in blogs %}
             <div class="post">
-                <img src="{{ photo.image.url }}">
-                <p>{{ photo.caption }}</p>
+                <a href="{% url 'view_blog' blog.id %}">
+                    <h4>Billet : {{ blog.title }}</h4>
+                    <img src="{{ blog.photo.image.url }}">
+                </a>
             </div>
         {% endfor %}
     </div>
