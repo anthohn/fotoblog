@@ -45,6 +45,8 @@ urlpatterns = [
     path('profil/photo/upload/', authentication.views.upload_profile_photo, name='upload_profile_photo'),
     path('blog/create', blog.views.blog_and_photo_upload, name='blog_create'),
     path('blog/<int:blog_id>', blog.views.view_blog, name='view_blog'),
+    path('blog/<int:blog_id>/edit', blog.views.edit_blog, name='edit_blog'),
+    path('photo/upload-multiple/', blog.views.upload_multiple_photos, name='upload_multiple_photos'),
 ]
 # Condition pour vérifier si le mode DEBUG est activé dans les paramètres du projet
 if settings.DEBUG:
