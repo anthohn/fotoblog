@@ -27,13 +27,12 @@ class Blog(models.Model):
     title = models.CharField(max_length=128)
     content = models.CharField(max_length=5000)
     # fk user
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
     starred = models.BooleanField(default=False)
-
     # Champ pour stocker le nombre de mots dans le contenu du blog
     word_count = models.IntegerField(null=True)
-
+    contributors = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, through='BlogContributor', related_name='contributions')
     # Fonction interne pour obtenir le nombre de mots dans le contenu du blog
     def _get_word_count(self):
             # Utilise la méthode split pour diviser le contenu en mots, puis renvoie la longueur de la liste résultante
@@ -45,3 +44,11 @@ class Blog(models.Model):
         self.word_count = self._get_word_count()
         # Appelle la méthode save de la classe parent pour sauvegarder l'objet
         super().save(*args, **kwargs)
+
+class BlogContributor(models.Model):
+    contributor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
+    contribution = models.CharField(max_length=255, blank=True)
+    
+    class Meta:
+        unique_together = ('contributor', 'blog')
